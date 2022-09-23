@@ -65,6 +65,7 @@ class ReactNativeZoomableView extends Component<
     contentHeight: undefined,
     panBoundaryPadding: 0,
     visualTouchFeedbackEnabled: true,
+    allowSingleTouch: true,
   };
 
   private panAnim = new Animated.ValueXY({ x: 0, y: 0 });
@@ -102,7 +103,8 @@ class ReactNativeZoomableView extends Component<
     super(props);
 
     this.gestureHandlers = PanResponder.create({
-      onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
+      onStartShouldSetPanResponder: this.props.allowSingleTouch ? this._handleStartShouldSetPanResponder : undefined,
+      onMoveShouldSetPanResponder: !this.props.allowSingleTouch ? this._handleMoveShouldSetPanResponder : undefined,
       onPanResponderGrant: this._handlePanResponderGrant,
       onPanResponderMove: this._handlePanResponderMove,
       onPanResponderRelease: this._handlePanResponderEnd,
