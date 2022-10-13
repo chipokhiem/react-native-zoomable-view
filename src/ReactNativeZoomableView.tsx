@@ -945,9 +945,24 @@ class ReactNativeZoomableView extends Component<
     )
       return false;
 
-    await this._zoomToLocation(0, 0, newZoomLevel);
+    await this._zoomToLocation(this.props.contentWidth / 2, this.props.contentHeight / 2, newZoomLevel);
     return true;
   }
+
+  async instantZoomTo(newZoomLevel: number): Promise<boolean> {
+    if (
+      // if we would go out of our min/max limits -> abort
+      newZoomLevel > this.props.maxZoom ||
+      newZoomLevel < this.props.minZoom
+    )
+      return false;
+
+    this.panAnim.setValue({ x: 0, y: 0 });
+    this.zoomAnim.setValue(1);
+
+    return true;
+  }
+
 
   /**
    * Zooms in or out by a specified change level
