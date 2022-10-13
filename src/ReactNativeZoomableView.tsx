@@ -103,8 +103,8 @@ class ReactNativeZoomableView extends Component<
     super(props);
 
     this.gestureHandlers = PanResponder.create({
-      onStartShouldSetPanResponder: this.props.allowSingleTouch ? this._handleStartShouldSetPanResponder : undefined,
-      onMoveShouldSetPanResponder: !this.props.allowSingleTouch ? this._handleMoveShouldSetPanResponder : undefined,
+      onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
+      onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
       onPanResponderGrant: this._handlePanResponderGrant,
       onPanResponderMove: this._handlePanResponderMove,
       onPanResponderRelease: this._handlePanResponderEnd,
@@ -370,8 +370,8 @@ class ReactNativeZoomableView extends Component<
     e: GestureResponderEvent,
     gestureState: PanResponderGestureState
   ) => {
-    if (this.props.onStartShouldSetPanResponder) {
-      return this.props.onStartShouldSetPanResponder(
+    if (this.props.onMoveShouldSetPanResponder) {
+      return this.props.onMoveShouldSetPanResponder(
         e,
         gestureState,
         this._getZoomableViewEventObject(),
